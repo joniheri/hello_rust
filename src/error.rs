@@ -17,6 +17,7 @@ pub enum AppError {
 #[derive(Serialize)]
 struct ErrorResponse {
     code: &'static str,
+    status: &'static str,
     message: String,
 }
 
@@ -27,6 +28,7 @@ impl IntoResponse for AppError {
                 StatusCode::BAD_REQUEST,
                 ErrorResponse {
                     code: "BAD_REQUEST",
+                    status: "fail",
                     message,
                 },
             ),
@@ -34,6 +36,7 @@ impl IntoResponse for AppError {
                 StatusCode::NOT_FOUND,
                 ErrorResponse {
                     code: "NOT_FOUND",
+                    status: "fail",
                     message,
                 },
             ),
@@ -41,6 +44,7 @@ impl IntoResponse for AppError {
                 StatusCode::INTERNAL_SERVER_ERROR,
                 ErrorResponse {
                     code: "INTERNAL_ERROR",
+                    status: "fail",
                     message,
                 },
             ),

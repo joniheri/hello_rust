@@ -5,6 +5,9 @@ pub struct User {
     pub id: u64,
     pub email: String,
     pub username: String,
+    #[allow(dead_code)]
+    #[serde(skip_serializing)]
+    pub password_hash: Option<String>,
     pub fullname: String,
 }
 
@@ -12,7 +15,8 @@ pub struct User {
 pub struct CreateUserRequest {
     pub email: String,
     pub username: String,
-    pub fullname: String,
+    pub password: Option<String>,
+    pub fullname: Option<String>,
 }
 
 #[derive(Deserialize)]

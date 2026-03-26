@@ -2,6 +2,7 @@ mod app;
 mod config;
 mod error;
 mod models;
+mod response;
 mod routes;
 mod state;
 
