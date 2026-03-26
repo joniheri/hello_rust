@@ -4,7 +4,7 @@ use tracing_subscriber::EnvFilter;
 use crate::{config::AppConfig, routes, state::AppState};
 
 pub fn build_router(config: AppConfig) -> Router {
-    let state = AppState { config };
+    let state = AppState::new(config);
     routes::router().with_state(state)
 }
 

@@ -9,18 +9,34 @@ pub type AppResult<T> = Result<T, AppError>;
 
 #[derive(Debug)]
 pub enum AppError {
-    Internal(&'static str),
+    BadRequest(String),
+    NotFound(String),
+    Internal(String),
 }
 
 #[derive(Serialize)]
 struct ErrorResponse {
     code: &'static str,
-    message: &'static str,
+    message: String,
 }
 
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let (status, body) = match self {
+            AppError::BadRequest(message) => (
+                StatusCode::BAD_REQUEST,
+                ErrorResponse {
+                    code: "BAD_REQUEST",
+                    message,
+                },
+            ),
+            AppError::NotFound(message) => (
+                StatusCode::NOT_FOUND,
+                ErrorResponse {
+                    code: "NOT_FOUND",
+                    message,
+                },
+            ),
             AppError::Internal(message) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 ErrorResponse {

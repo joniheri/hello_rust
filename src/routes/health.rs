@@ -12,7 +12,7 @@ pub struct HealthResponse {
 pub async fn handler(State(state): State<AppState>) -> AppResult<Json<HealthResponse>> {
     if state.config.service_name.trim().is_empty() {
         return Err(crate::error::AppError::Internal(
-            "service name configuration is empty",
+            "service name configuration is empty".to_string(),
         ));
     }
 
