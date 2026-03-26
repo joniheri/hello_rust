@@ -22,7 +22,5 @@ async fn main() {
         "server listening"
     );
 
-    axum::serve(listener, app)
-        .await
-        .expect("axum server error");
+    axum::serve(listener, app).await.expect("axum server error");
 }
