@@ -5,7 +5,7 @@ pub struct User {
     pub id: u64,
     pub email: String,
     pub username: String,
-    #[allow(dead_code)]
+    #[expect(dead_code, reason = "stored for future auth flow, not returned in API response")]
     #[serde(skip_serializing)]
     pub password_hash: Option<String>,
     pub fullname: String,

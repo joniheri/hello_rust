@@ -1,31 +1,23 @@
-use std::{
-    collections::HashMap,
-    sync::{
-        Arc, RwLock,
-        atomic::{AtomicU64, Ordering},
-    },
-};
+use std::sync::Arc;
 
 use crate::config::AppConfig;
-use crate::models::user::User;
+use crate::repositories::user_repository::UserRepository;
+use crate::services::user_service::UserService;
 
 #[derive(Clone)]
 pub struct AppState {
     pub config: AppConfig,
-    pub users: Arc<RwLock<HashMap<u64, User>>>,
-    pub next_user_id: Arc<AtomicU64>,
+    pub user_service: Arc<UserService>,
 }
 
 impl AppState {
     pub fn new(config: AppConfig) -> Self {
+        let user_repository = Arc::new(UserRepository::new());
+        let user_service = Arc::new(UserService::new(user_repository));
+
         Self {
             config,
-            users: Arc::new(RwLock::new(HashMap::new())),
-            next_user_id: Arc::new(AtomicU64::new(1)),
+            user_service,
         }
-    }
-
-    pub fn allocate_user_id(&self) -> u64 {
-        self.next_user_id.fetch_add(1, Ordering::Relaxed)
     }
 }
