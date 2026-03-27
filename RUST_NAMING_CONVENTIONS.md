@@ -4,15 +4,15 @@ Dokumen ini jadi pedoman penamaan code di project Rust (terutama service Axum), 
 
 ## Ringkasan Cepat
 
-| Jenis | Case yang disarankan | Contoh |
-|---|---|---|
-| Function / method | `snake_case` | `create_user`, `validate_email` |
-| Variable lokal | `snake_case` | `user_id`, `password_hash` |
-| Module / file | `snake_case` | `routes/users.rs`, `app_state.rs` |
-| Struct / Enum / Trait | `PascalCase` | `User`, `AppError`, `UserRepository` |
-| Type alias | `PascalCase` | `AppResult<T>` |
-| Constant / static | `SCREAMING_SNAKE_CASE` | `DEFAULT_COST`, `MAX_PAGE_SIZE` |
-| Crate/package name | `snake_case` | `hello_rust` |
+| Jenis                 | Case yang disarankan   | Contoh                               |
+| --------------------- | ---------------------- | ------------------------------------ |
+| Function / method     | `snake_case`           | `create_user`, `validate_email`      |
+| Variable lokal        | `snake_case`           | `user_id`, `password_hash`           |
+| Module / file         | `snake_case`           | `routes/users.rs`, `app_state.rs`    |
+| Struct / Enum / Trait | `PascalCase`           | `User`, `AppError`, `UserRepository` |
+| Type alias            | `PascalCase`           | `AppResult<T>`                       |
+| Constant / static     | `SCREAMING_SNAKE_CASE` | `DEFAULT_COST`, `MAX_PAGE_SIZE`      |
+| Crate/package name    | `snake_case`           | `hello_rust`                         |
 
 Catatan: `camelCase` bukan gaya idiomatik Rust untuk identifier code.
 
@@ -28,6 +28,7 @@ fn validate_username(username: &str) -> bool { !username.trim().is_empty() }
 ```
 
 Tidak disarankan:
+
 - `createUser`
 - `CreateUser`
 
@@ -95,6 +96,7 @@ Router::new()
 ```
 
 Handler:
+
 - `list_users`
 - `get_user`
 - `create_user`
@@ -134,18 +136,19 @@ Output:
 ```
 
 Rekomendasi:
+
 - Internal code Rust: tetap idiomatik (`snake_case`/`PascalCase`).
 - Bentuk JSON eksternal: ikuti kebutuhan API contract via serde attributes.
 
 ## 8. Kapan Pakai Apa (Praktis)
 
-| Kondisi | Gunakan |
-|---|---|
-| Menulis handler baru | `snake_case` |
-| Menambah request/response struct | `PascalCase` untuk type, `snake_case` untuk field |
-| Menambah konstanta global | `SCREAMING_SNAKE_CASE` |
-| Menamai file route/service | `snake_case` |
-| Menyesuaikan format JSON eksternal | serde `rename` / `rename_all` |
+| Kondisi                            | Gunakan                                           |
+| ---------------------------------- | ------------------------------------------------- |
+| Menulis handler baru               | `snake_case`                                      |
+| Menambah request/response struct   | `PascalCase` untuk type, `snake_case` untuk field |
+| Menambah konstanta global          | `SCREAMING_SNAKE_CASE`                            |
+| Menamai file route/service         | `snake_case`                                      |
+| Menyesuaikan format JSON eksternal | serde `rename` / `rename_all`                     |
 
 ## 9. Contoh Buruk vs Bagus
 

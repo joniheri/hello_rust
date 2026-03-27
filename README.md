@@ -70,12 +70,12 @@ cargo clippy --all-targets --all-features
 
 Project ini membaca env berikut:
 
-| Variable | Default | Keterangan |
-|---|---|---|
-| `APP_SERVICE_NAME` | `hello_rust` | Nama service |
-| `APP_HOST` | `127.0.0.1` | Host bind server |
-| `APP_PORT` | `3000` | Port server |
-| `RUST_LOG` | `info,hello_rust=debug` | Level logging |
+| Variable           | Default                 | Keterangan       |
+| ------------------ | ----------------------- | ---------------- |
+| `APP_SERVICE_NAME` | `hello_rust`            | Nama service     |
+| `APP_HOST`         | `127.0.0.1`             | Host bind server |
+| `APP_PORT`         | `3000`                  | Port server      |
+| `RUST_LOG`         | `info,hello_rust=debug` | Level logging    |
 
 Contoh run dengan env custom:
 
