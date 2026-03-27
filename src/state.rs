@@ -1,23 +1,24 @@
 use std::sync::Arc;
 
 use crate::config::AppConfig;
-use crate::repositories::user_repository::UserRepository;
-use crate::services::user_service::UserService;
+use crate::repositories::user_dummy_repository::UserDummyRepository;
+use crate::services::user_dummy_service::UserDummyService;
 
 #[derive(Clone)]
 pub struct AppState {
     pub config: AppConfig,
-    pub user_service: Arc<UserService>,
+    pub user_dummy_service: Arc<UserDummyService>,
 }
 
 impl AppState {
     pub fn new(config: AppConfig) -> Self {
-        let user_repository = Arc::new(UserRepository::new());
-        let user_service = Arc::new(UserService::new(user_repository));
+        let user_dummy_repository = Arc::new(UserDummyRepository::new());
+        let user_dummy_service = Arc::new(UserDummyService::new(user_dummy_repository));
 
         Self {
             config,
-            user_service,
+            user_dummy_service,
         }
     }
 }
+

@@ -6,14 +6,14 @@ use std::{
     },
 };
 
-use crate::{error::AppError, models::user::User};
+use crate::{error::AppError, models::user_dummy::User};
 
-pub struct UserRepository {
+pub struct UserDummyRepository {
     users: RwLock<HashMap<u64, User>>,
     next_user_id: AtomicU64,
 }
 
-impl UserRepository {
+impl UserDummyRepository {
     pub fn new() -> Self {
         Self {
             users: RwLock::new(HashMap::new()),
@@ -104,3 +104,4 @@ impl UserRepository {
         Ok(users.remove(&id).is_some())
     }
 }
+

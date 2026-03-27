@@ -4,25 +4,25 @@ use bcrypt::{DEFAULT_COST, hash};
 
 use crate::{
     error::{AppError, AppResult},
-    models::user::{CreateUserRequest, UpdateUserRequest, User},
-    repositories::user_repository::UserRepository,
+    models::user_dummy::{CreateUserRequest, UpdateUserRequest, User},
+    repositories::user_dummy_repository::UserDummyRepository,
 };
 
-pub struct UserService {
-    user_repository: Arc<UserRepository>,
+pub struct UserDummyService {
+    user_dummy_repository: Arc<UserDummyRepository>,
 }
 
-impl UserService {
-    pub fn new(user_repository: Arc<UserRepository>) -> Self {
-        Self { user_repository }
+impl UserDummyService {
+    pub fn new(user_dummy_repository: Arc<UserDummyRepository>) -> Self {
+        Self { user_dummy_repository }
     }
 
     pub fn list_users(&self) -> AppResult<Vec<User>> {
-        self.user_repository.list()
+        self.user_dummy_repository.list()
     }
 
     pub fn get_user(&self, id: u64) -> AppResult<User> {
-        self.user_repository
+        self.user_dummy_repository
             .find_by_id(id)?
             .ok_or_else(|| AppError::NotFound(format!("user with id {} not found", id)))
     }
@@ -34,13 +34,13 @@ impl UserService {
         let email = payload.email.trim().to_string();
         let username = payload.username.trim().to_string();
 
-        if self.user_repository.exists_by_email(&email)? {
+        if self.user_dummy_repository.exists_by_email(&email)? {
             return Err(AppError::BadRequest(format!(
                 "email: {} is already in use",
                 email
             )));
         }
-        if self.user_repository.exists_by_username(&username)? {
+        if self.user_dummy_repository.exists_by_username(&username)? {
             return Err(AppError::BadRequest(format!(
                 "username: {} is already in use",
                 username
@@ -49,7 +49,7 @@ impl UserService {
 
         let password_hash = payload.password.as_deref().map(hash_password).transpose()?;
 
-        self.user_repository.create(User {
+        self.user_dummy_repository.create(User {
             id: 0,
             email,
             username,
@@ -72,7 +72,7 @@ impl UserService {
             validate_username(username)?;
         }
 
-        let updated = self.user_repository.update(
+        let updated = self.user_dummy_repository.update(
             id,
             payload.email.map(|v| v.trim().to_string()),
             payload.username.map(|v| v.trim().to_string()),
@@ -83,7 +83,7 @@ impl UserService {
     }
 
     pub fn delete_user(&self, id: u64) -> AppResult<()> {
-        let deleted = self.user_repository.delete(id)?;
+        let deleted = self.user_dummy_repository.delete(id)?;
         if !deleted {
             return Err(AppError::NotFound(format!("user with id {} not found", id)));
         }
@@ -133,3 +133,4 @@ fn hash_password(password: &str) -> AppResult<String> {
     hash(password, DEFAULT_COST)
         .map_err(|_| AppError::Internal("failed to hash password".to_string()))
 }
+
